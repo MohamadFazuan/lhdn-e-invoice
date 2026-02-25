@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Cloudflare Wrangler
+.wrangler/
+
+# Next.js build output
+.next/
+
+# Generic build output
+dist/
+
+# SQLite / D1 local databases
+*.db
+
+# macOS
+.DS_Store
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

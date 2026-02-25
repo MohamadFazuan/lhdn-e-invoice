@@ -1,0 +1,138 @@
+name = "lhdn-einvoice"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lhdn-einvoice-db"
+database_id = "4a300446-4564-499f-a1c3-c520d3748a0d"
+migrations_dir = "migrations"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "c0363cd9ed9d47bb84e85cd1113baa91"
+
+[[r2_buckets]]
+binding = "FILE_BUCKET"
+bucket_name = "lhdn-einvoice-files"
+
+[ai]
+binding = "AI"
+
+# ── OCR Queue ──────────────────────────────────────────────────────────────────
+[[queues.producers]]
+queue = "lhdn-ocr-queue"
+binding = "OCR_QUEUE"
+
+[[queues.consumers]]
+queue = "lhdn-ocr-queue"
+max_batch_size = 5
+max_batch_timeout = 30
+max_retries = 3
+dead_letter_queue = "lhdn-ocr-dlq"
+
+# ── Notification Queue (Feature 2) ─────────────────────────────────────────────
+[[queues.producers]]
+queue = "lhdn-notifications-queue"
+binding = "NOTIFICATION_QUEUE"
+
+[[queues.consumers]]
+queue = "lhdn-notifications-queue"
+max_batch_size = 10
+max_batch_timeout = 10
+max_retries = 3
+dead_letter_queue = "lhdn-notifications-dlq"
+
+# ── Bulk Import Queue (Feature 5) ──────────────────────────────────────────────
+[[queues.producers]]
+queue = "lhdn-bulk-import-queue"
+binding = "BULK_IMPORT_QUEUE"
+
+[[queues.consumers]]
+queue = "lhdn-bulk-import-queue"
+max_batch_size = 1
+max_batch_timeout = 60
+max_retries = 2
+dead_letter_queue = "lhdn-bulk-import-dlq"
+
+# ── Email Worker (Feature 2) — requires verified sender domain ─────────────────
+send_email = [
+  { name = "EMAIL_SENDER", destination_address = "noreply@REPLACE_WITH_YOUR_DOMAIN.com" }
+]
+
+[vars]
+NODE_ENV = "production"
+LHDN_ENV = "production"
+BCRYPT_SALT_ROUNDS = "10"
+MAX_FILE_SIZE_MB = "10"
+R2_FILE_BUCKET_NAME = "lhdn-einvoice-files"
+APP_URL = "https://REPLACE_WITH_YOUR_APP_URL.com"
+FROM_EMAIL = "noreply@REPLACE_WITH_YOUR_DOMAIN.com"
+
+# Secrets — set via: wrangler secret put <SECRET_NAME>
+# JWT_ACCESS_SECRET
+# JWT_REFRESH_SECRET
+# ENCRYPTION_KEY
+# R2_ACCESS_KEY_ID
+# R2_SECRET_ACCESS_KEY
+# R2_ACCOUNT_ID
+
+[env.staging]
+name = "lhdn-einvoice-staging"
+
+[env.staging.vars]
+NODE_ENV = "staging"
+LHDN_ENV = "sandbox"
+BCRYPT_SALT_ROUNDS = "10"
+MAX_FILE_SIZE_MB = "10"
+R2_FILE_BUCKET_NAME = "lhdn-einvoice-files-staging"
+APP_URL = "https://staging.REPLACE_WITH_YOUR_APP_URL.com"
+FROM_EMAIL = "noreply@REPLACE_WITH_YOUR_DOMAIN.com"
+
+[env.staging.ai]
+binding = "AI"
+
+[[env.staging.queues.producers]]
+queue = "lhdn-ocr-queue-staging"
+binding = "OCR_QUEUE"
+
+[[env.staging.queues.consumers]]
+queue = "lhdn-ocr-queue-staging"
+max_batch_size = 5
+max_batch_timeout = 30
+max_retries = 3
+
+[[env.staging.queues.producers]]
+queue = "lhdn-notifications-queue-staging"
+binding = "NOTIFICATION_QUEUE"
+
+[[env.staging.queues.consumers]]
+queue = "lhdn-notifications-queue-staging"
+max_batch_size = 10
+max_batch_timeout = 10
+max_retries = 3
+
+[[env.staging.queues.producers]]
+queue = "lhdn-bulk-import-queue-staging"
+binding = "BULK_IMPORT_QUEUE"
+
+[[env.staging.queues.consumers]]
+queue = "lhdn-bulk-import-queue-staging"
+max_batch_size = 1
+max_batch_timeout = 60
+max_retries = 2
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "lhdn-einvoice-db-staging"
+database_id = "REPLACE_WITH_YOUR_STAGING_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[[env.staging.kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "REPLACE_WITH_YOUR_STAGING_KV_NAMESPACE_ID"
+
+[[env.staging.r2_buckets]]
+binding = "FILE_BUCKET"
+bucket_name = "lhdn-einvoice-files-staging"

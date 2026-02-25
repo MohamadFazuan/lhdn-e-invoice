@@ -1,0 +1,21 @@
+{
+  "name": "LHDN e-Invoice",
+  "short_name": "e-Invoice",
+  "description": "Smart e-invoicing for Malaysian businesses. Submit to LHDN MyInvois.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#18181b",
+  "orientation": "portrait-primary",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "New Invoice", "url": "/invoices/new", "description": "Create a new invoice" },
+    { "name": "Upload Document", "url": "/upload", "description": "Upload and OCR a document" },
+    { "name": "Dashboard", "url": "/dashboard", "description": "View dashboard" }
+  ]
+}

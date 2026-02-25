@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1771775645920,
+      "tag": "0000_cooing_hitman",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1740412800000,
+      "tag": "0001_bulk_import_source",
+      "breakpoints": true
+    }
+  ]
+}
