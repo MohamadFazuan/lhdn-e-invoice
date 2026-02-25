@@ -40,9 +40,9 @@ export default async function PortalReceiptPage({ params }: { params: Promise<{ 
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900">
               <FileText className="h-4 w-4 text-white" />
             </div>
-            <span className="font-semibold text-zinc-900">e-Invoice</span>
+            <span className="font-semibold text-zinc-900">invoisJer!</span>
           </div>
-          <p className="text-xs text-zinc-400">Powered by LHDN e-Invoice</p>
+          <p className="text-xs text-zinc-400">Powered by invoisJer!</p>
         </div>
 
         {/* LHDN validation badge */}
@@ -146,7 +146,7 @@ export default async function PortalReceiptPage({ params }: { params: Promise<{ 
           </p>
         </div>
 
-        <p className="mt-8 text-center text-xs text-zinc-400">Powered by LHDN e-Invoice platform</p>
+        <p className="mt-8 text-center text-xs text-zinc-400">Powered by invoisJer!</p>
       </div>
     </div>
   );

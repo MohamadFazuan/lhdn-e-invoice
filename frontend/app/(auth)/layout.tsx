@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-900">
           <FileText className="h-5 w-5 text-white" />
         </div>
-        <span className="text-xl font-semibold tracking-tight text-zinc-900">e-Invoice</span>
+        <span className="text-xl font-semibold tracking-tight text-zinc-900">invoisJer!</span>
       </div>
       {children}
     </div>

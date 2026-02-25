@@ -45,7 +45,7 @@ export default function InviteAcceptPage({ params }: { params: Promise<{ token: 
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-900">
           <FileText className="h-5 w-5 text-white" />
         </div>
-        <span className="text-xl font-semibold tracking-tight text-zinc-900">e-Invoice</span>
+        <span className="text-xl font-semibold tracking-tight text-zinc-900">invoisJer!</span>
       </div>
 
       <Card className="w-full max-w-md border-zinc-200 shadow-sm">
@@ -54,7 +54,7 @@ export default function InviteAcceptPage({ params }: { params: Promise<{ token: 
             <UserCheck className="h-6 w-6 text-emerald-600" />
           </div>
           <CardTitle className="text-xl">Team Invitation</CardTitle>
-          <CardDescription>You&apos;ve been invited to join an e-Invoice team.</CardDescription>
+          <CardDescription>You&apos;ve been invited to join an invoisJer! team.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {!accessToken ? (

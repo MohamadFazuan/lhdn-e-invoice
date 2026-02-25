@@ -94,7 +94,7 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="max-w-lg space-y-6">
+    <div className="max-w-lg space-y-6 justify-self-center w-full">
       <PageHeader title="Upload Document" description="Upload a PDF or image invoice for AI extraction." />
 
       {stage === 'idle' && (

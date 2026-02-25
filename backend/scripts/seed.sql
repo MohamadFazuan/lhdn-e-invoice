@@ -5,6 +5,14 @@
 -- Test credentials (all users):
 --   password: Test1234!
 --   hash:     $2a$10$6v1okiYmvPIx9GQ//35MHuyKab9D/F6kOkz0B9rEKkDWpFqnl..F.
+--
+-- Demo users (all 4 business roles):
+--   password: password123
+--   hash:     $2a$10$TlJBGP8xWV3Mnm9XWm61OOcH2KP/t.5vYI.i.u/5hRNuTRj9dHZ2q
+--   owner@demo.com      → OWNER
+--   admin@demo.com      → ADMIN
+--   accountant@demo.com → ACCOUNTANT
+--   viewer@demo.com     → VIEWER
 -- =============================================================================
 
 -- ── Wipe existing seed data (safe for local only) ────────────────────────────
@@ -33,6 +41,13 @@ INSERT INTO users (id, email, name, password_hash, role, is_active, created_at, 
   ('usr_02_admin',  'siti@techventure.my',  'Siti Aishah',       '$2a$10$6v1okiYmvPIx9GQ//35MHuyKab9D/F6kOkz0B9rEKkDWpFqnl..F.', 'USER',  1, '2025-01-11T09:00:00Z', '2025-01-11T09:00:00Z'),
   ('usr_03_viewer', 'rizal@techventure.my', 'Mohd Rizal Ismail', '$2a$10$6v1okiYmvPIx9GQ//35MHuyKab9D/F6kOkz0B9rEKkDWpFqnl..F.', 'USER',  1, '2025-02-01T10:00:00Z', '2025-02-01T10:00:00Z'),
   ('usr_04_owner2', 'farah@globallogistic.my', 'Farah Nadia',    '$2a$10$6v1okiYmvPIx9GQ//35MHuyKab9D/F6kOkz0B9rEKkDWpFqnl..F.', 'USER',  1, '2025-01-15T08:30:00Z', '2025-01-15T08:30:00Z');
+
+-- Demo users — all 4 business member roles (password: password123)
+INSERT INTO users (id, email, name, password_hash, role, is_active, created_at, updated_at) VALUES
+  ('usr_demo_owner',      'owner@demo.com',      'Demo Owner',      '$2a$10$TlJBGP8xWV3Mnm9XWm61OOcH2KP/t.5vYI.i.u/5hRNuTRj9dHZ2q', 'USER', 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('usr_demo_admin',      'admin@demo.com',      'Demo Admin',      '$2a$10$TlJBGP8xWV3Mnm9XWm61OOcH2KP/t.5vYI.i.u/5hRNuTRj9dHZ2q', 'USER', 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('usr_demo_accountant', 'accountant@demo.com', 'Demo Accountant', '$2a$10$TlJBGP8xWV3Mnm9XWm61OOcH2KP/t.5vYI.i.u/5hRNuTRj9dHZ2q', 'USER', 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('usr_demo_viewer',     'viewer@demo.com',     'Demo Viewer',     '$2a$10$TlJBGP8xWV3Mnm9XWm61OOcH2KP/t.5vYI.i.u/5hRNuTRj9dHZ2q', 'USER', 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z');
 
 -- =============================================================================
 -- BUSINESSES
@@ -70,6 +85,20 @@ INSERT INTO businesses (
     1, '2025-01-15T08:35:00Z', '2025-01-15T08:35:00Z'
   );
 
+-- Demo business (linked to demo owner)
+INSERT INTO businesses (
+  id, user_id, name, tin, registration_number, msic_code,
+  address_line0, postal_zone, city_name, state_code, country_code,
+  email, phone,
+  is_active, created_at, updated_at
+) VALUES (
+  'biz_demo', 'usr_demo_owner',
+  'Demo Company Sdn Bhd', 'C00000000001', '202500000001', '6201',
+  'No 1, Jalan Demo, Taman Demo', '50000', 'Kuala Lumpur', '14', 'MYS',
+  'demo@democompany.my', '+60312340000',
+  1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'
+);
+
 -- =============================================================================
 -- BUSINESS MEMBERS
 -- =============================================================================
@@ -84,6 +113,13 @@ INSERT INTO business_members (id, business_id, user_id, role, invited_by_user_id
 INSERT INTO business_members (id, business_id, user_id, role, invited_by_user_id, accepted_at, created_at, updated_at) VALUES
   ('mbr_04', 'biz_02_globallogistic', 'usr_04_owner2', 'OWNER', NULL, '2025-01-15T08:35:00Z', '2025-01-15T08:35:00Z', '2025-01-15T08:35:00Z');
 
+-- Demo business: all 4 roles represented
+INSERT INTO business_members (id, business_id, user_id, role, invited_by_user_id, accepted_at, created_at, updated_at) VALUES
+  ('mbr_demo_owner',      'biz_demo', 'usr_demo_owner',      'OWNER',      NULL,             '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('mbr_demo_admin',      'biz_demo', 'usr_demo_admin',      'ADMIN',      'usr_demo_owner', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('mbr_demo_accountant', 'biz_demo', 'usr_demo_accountant', 'ACCOUNTANT', 'usr_demo_owner', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('mbr_demo_viewer',     'biz_demo', 'usr_demo_viewer',     'VIEWER',     'usr_demo_owner', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z');
+
 -- =============================================================================
 -- NOTIFICATION PREFERENCES
 -- =============================================================================
@@ -92,7 +128,11 @@ INSERT INTO notification_preferences (id, user_id, email_on_submitted, email_on_
   ('notpref_01', 'usr_01_owner',  1, 1, 1, 0, 1, '2025-01-10T08:05:00Z', '2025-01-10T08:05:00Z'),
   ('notpref_02', 'usr_02_admin',  1, 1, 1, 1, 1, '2025-01-11T09:05:00Z', '2025-01-11T09:05:00Z'),
   ('notpref_03', 'usr_03_viewer', 0, 1, 1, 0, 1, '2025-02-01T10:05:00Z', '2025-02-01T10:05:00Z'),
-  ('notpref_04', 'usr_04_owner2', 1, 1, 1, 0, 1, '2025-01-15T08:35:00Z', '2025-01-15T08:35:00Z');
+  ('notpref_04', 'usr_04_owner2', 1, 1, 1, 0, 1, '2025-01-15T08:35:00Z', '2025-01-15T08:35:00Z'),
+  ('notpref_demo_owner',      'usr_demo_owner',      1, 1, 1, 0, 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('notpref_demo_admin',      'usr_demo_admin',      1, 1, 1, 0, 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('notpref_demo_accountant', 'usr_demo_accountant', 1, 1, 1, 0, 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z'),
+  ('notpref_demo_viewer',     'usr_demo_viewer',     0, 1, 1, 0, 1, '2025-01-01T08:00:00Z', '2025-01-01T08:00:00Z');
 
 -- =============================================================================
 -- INVOICES  (various statuses to cover the full flow)
@@ -376,3 +416,65 @@ INSERT INTO audit_logs (id, user_id, business_id, invoice_id, action, entity_typ
   ('alog_05', 'usr_02_admin',  'biz_01_techventure', 'inv_06_rejected',    'SUBMIT', 'INVOICE',  'inv_06_rejected',    '{"status":"READY_FOR_SUBMISSION"}', '{"status":"SUBMITTED"}', '127.0.0.1', '2025-02-08T14:30:00Z'),
   ('alog_06', NULL,            'biz_01_techventure', 'inv_06_rejected',    'REJECT', 'INVOICE',  'inv_06_rejected',    '{"status":"SUBMITTED"}', '{"status":"REJECTED"}', NULL, '2025-02-08T15:00:00Z'),
   ('alog_07', 'usr_01_owner',  'biz_01_techventure', 'inv_07_cancelled',   'CANCEL', 'INVOICE',  'inv_07_cancelled',   '{"status":"DRAFT"}', '{"status":"CANCELLED"}', '127.0.0.1', '2025-01-28T11:00:00Z');
+
+-- =============================================================================
+-- DEMO BUSINESS INVOICES  (for role-testing with demo users)
+-- =============================================================================
+
+-- 1. DRAFT
+INSERT INTO invoices (
+  id, business_id, invoice_number, invoice_type, status,
+  supplier_name, supplier_tin, supplier_registration,
+  buyer_country_code, currency_code, subtotal, tax_total, grand_total,
+  issue_date, created_at, updated_at
+) VALUES (
+  'inv_demo_01', 'biz_demo', 'DEMO-001', '01', 'DRAFT',
+  'Demo Company Sdn Bhd', 'C00000000001', '202500000001',
+  'MYS', 'MYR', '0.00', '0.00', '0.00',
+  '2025-02-01', '2025-02-01T10:00:00Z', '2025-02-01T10:00:00Z'
+);
+
+-- 2. VALIDATED
+INSERT INTO invoices (
+  id, business_id, invoice_number, invoice_type, status,
+  supplier_name, supplier_tin, supplier_registration,
+  buyer_name, buyer_tin, buyer_registration_number, buyer_email, buyer_country_code,
+  currency_code, subtotal, tax_total, grand_total,
+  issue_date, due_date,
+  lhdn_uuid, lhdn_submission_uid, lhdn_validation_status, lhdn_submitted_at, lhdn_validated_at,
+  created_at, updated_at
+) VALUES (
+  'inv_demo_02', 'biz_demo', 'DEMO-002', '01', 'VALIDATED',
+  'Demo Company Sdn Bhd', 'C00000000001', '202500000001',
+  'Demo Buyer Sdn Bhd', 'C11111111111', '202200011111', 'buyer@demo.com', 'MYS',
+  'MYR', '1000.00', '60.00', '1060.00',
+  '2025-01-15', '2025-02-15',
+  'DOC-UUID-DEMO-0001', 'SUB-DEMO-20250115-0001', 'Valid',
+  '2025-01-15T12:00:00Z', '2025-01-15T12:30:00Z',
+  '2025-01-15T10:00:00Z', '2025-01-15T12:31:00Z'
+);
+
+-- 3. REJECTED
+INSERT INTO invoices (
+  id, business_id, invoice_number, invoice_type, status,
+  supplier_name, supplier_tin, supplier_registration,
+  buyer_name, buyer_tin, buyer_registration_number, buyer_email, buyer_country_code,
+  currency_code, subtotal, tax_total, grand_total,
+  issue_date,
+  lhdn_uuid, lhdn_submission_uid, lhdn_validation_status, lhdn_submitted_at,
+  created_at, updated_at
+) VALUES (
+  'inv_demo_03', 'biz_demo', 'DEMO-003', '01', 'REJECTED',
+  'Demo Company Sdn Bhd', 'C00000000001', '202500000001',
+  'Another Buyer Sdn Bhd', 'C22222222222', '202300022222', 'buyer2@demo.com', 'MYS',
+  'MYR', '500.00', '30.00', '530.00',
+  '2025-01-20',
+  'DOC-UUID-DEMO-0002', 'SUB-DEMO-20250120-0002', 'Invalid',
+  '2025-01-20T14:00:00Z',
+  '2025-01-20T13:00:00Z', '2025-01-20T14:30:00Z'
+);
+
+-- Demo invoice items
+INSERT INTO invoice_items (id, invoice_id, description, classification_code, quantity, unit_code, unit_price, subtotal, tax_type, tax_rate, tax_amount, total, sort_order, created_at) VALUES
+  ('item_demo_02_1', 'inv_demo_02', 'Professional Services', '022', '10', 'HUR', '100.00', '1000.00', '01', '6', '60.00', '1060.00', 0, '2025-01-15T12:31:00Z'),
+  ('item_demo_03_1', 'inv_demo_03', 'Consulting Fee',        '022', '5',  'HUR', '100.00',  '500.00', '01', '6', '30.00',  '530.00', 0, '2025-01-20T14:30:00Z');

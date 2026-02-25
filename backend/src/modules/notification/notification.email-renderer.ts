@@ -48,8 +48,8 @@ ${ctx.rejectionReason ? `<p>Reason: ${ctx.rejectionReason}</p>` : ''}
 
     case 'TEAM_INVITE':
       return {
-        subject: `You have been invited to join ${ctx.businessName ?? 'a business'} on LHDN e-Invoice`,
-        htmlBody: `<p>You have been invited to join <strong>${ctx.businessName ?? 'a business'}</strong> on LHDN e-Invoice.</p>
+        subject: `You have been invited to join ${ctx.businessName ?? 'a business'} on invoisJer!`,
+        htmlBody: `<p>You have been invited to join <strong>${ctx.businessName ?? 'a business'}</strong> on invoisJer!</p>
 <p><a href="${ctx.inviteUrl}">Accept invitation</a></p>
 <p>This invitation expires in 7 days.</p>`,
       };

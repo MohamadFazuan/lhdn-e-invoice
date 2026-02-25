@@ -7,13 +7,13 @@ import { CrispChat } from '@/components/crisp-chat';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: { default: 'LHDN e-Invoice', template: '%s | LHDN e-Invoice' },
+  title: { default: 'invoisJer!', template: '%s | invoisJer!' },
   description: 'Smart e-invoicing for Malaysian businesses. Submit to LHDN MyInvois with AI-powered OCR.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'e-Invoice',
+    title: 'invoisJer!',
   },
 };
 

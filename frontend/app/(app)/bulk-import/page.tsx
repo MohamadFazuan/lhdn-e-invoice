@@ -249,7 +249,7 @@ export default function BulkImportPage() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="max-w-4xl space-y-6 justify-self-center w-full">
       <PageHeader title="Bulk Import">
         {sessionId && (
           <Button variant="outline" size="sm" onClick={handleNewSession}>

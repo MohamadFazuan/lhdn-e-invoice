@@ -2,7 +2,7 @@
 
 import { Menu, Bell } from 'lucide-react';
 import Link from 'next/link';
-import { FileText } from 'lucide-react';
+import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -26,11 +26,8 @@ export function Topbar() {
         </SheetContent>
       </Sheet>
 
-      <Link href="/dashboard" className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900">
-          <FileText className="h-3.5 w-3.5 text-white" />
-        </div>
-        <span className="font-semibold text-zinc-900">e-Invoice</span>
+      <Link href="/dashboard">
+        <Logo size={28} showText />
       </Link>
 
       <div className="ml-auto">

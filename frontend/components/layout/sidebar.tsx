@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Logo } from '@/components/ui/logo';
 import {
   LayoutDashboard, FileText, Upload, Package, BarChart3,
   Users, Settings, Bell, MessageCircle, LogOut, ChevronRight, Zap,
@@ -39,11 +40,8 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
   return (
     <div className="flex h-full w-64 flex-col bg-white border-r border-zinc-200">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-6 py-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900">
-          <FileText className="h-4 w-4 text-white" />
-        </div>
-        <span className="text-lg font-semibold tracking-tight text-zinc-900">e-Invoice</span>
+      <div className="px-6 py-5">
+        <Logo size={32} showText />
       </div>
 
       <Separator />

@@ -13,7 +13,7 @@ export default {
       try {
         await env.EMAIL_SENDER.send({
           from: {
-            name: 'LHDN e-Invoice',
+            name: 'invoisJer!',
             email: env.FROM_EMAIL,
           },
           to: [{ email: job.recipientEmail }],
