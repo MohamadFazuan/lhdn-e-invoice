@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8787:8787"
+    # Mount .dev.vars so wrangler can read secrets (copy from backend/.env.example)
+    volumes:
+      - ./backend/.dev.vars:/app/.dev.vars:ro
+      # Persist the local D1 SQLite database across container restarts
+      - backend_wrangler:/app/.wrangler
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_* vars are baked in at build time.
+        # The browser calls the API via the host-exposed port (localhost:8787).
+        NEXT_PUBLIC_API_URL: http://localhost:8787
+        NEXT_PUBLIC_APP_URL: http://localhost:3000
+        NEXT_PUBLIC_CRISP_WEBSITE_ID: ""
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_wrangler:

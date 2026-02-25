@@ -3,7 +3,8 @@ import withPWA from '@ducanh2912/next-pwa';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-images: {
+  output: 'standalone',
+  images: {
     remotePatterns: [],
   },
 };
