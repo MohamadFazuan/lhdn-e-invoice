@@ -4,7 +4,8 @@ import { Menu, Bell } from 'lucide-react';
 import Link from 'next/link';
 import { FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Sidebar } from './sidebar';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ export function Topbar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="p-0 w-64">
+          <VisuallyHidden><SheetTitle>Navigation</SheetTitle></VisuallyHidden>
           <Sidebar onClose={() => setOpen(false)} />
         </SheetContent>
       </Sheet>

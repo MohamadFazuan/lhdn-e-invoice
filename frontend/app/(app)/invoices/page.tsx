@@ -39,8 +39,8 @@ export default function InvoicesPage() {
     queryKey: ['invoices', status, search, page],
     queryFn: async () => {
       const res = await api.get(`api/invoices?${params}`);
-      const json: ApiResponse<Invoice[]> = await res.json();
-      return { invoices: json.data ?? [], meta: json.meta };
+      const json: ApiResponse<{ invoices: Invoice[]; pagination: { page: number; limit: number; total: number; totalPages: number } }> = await res.json();
+      return { invoices: json.data?.invoices ?? [], meta: json.data?.pagination };
     },
   });
 
@@ -197,10 +197,10 @@ export default function InvoicesPage() {
       {/* Pagination */}
       {data && data.meta && (data.meta.total ?? 0) > 20 && (
         <div className="mt-4 flex items-center justify-between text-sm text-zinc-500">
-          <p>Page {page} of {Math.ceil((data.meta.total ?? 0) / 20)}</p>
+          <p>Page {page} of {data.meta.totalPages ?? 1}</p>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" disabled={page === 1} onClick={() => setPage(p => p - 1)}>Previous</Button>
-            <Button variant="outline" size="sm" disabled={page >= Math.ceil((data.meta.total ?? 0) / 20)} onClick={() => setPage(p => p + 1)}>Next</Button>
+            <Button variant="outline" size="sm" disabled={page >= (data.meta?.totalPages ?? 1)} onClick={() => setPage(p => p + 1)}>Next</Button>
           </div>
         </div>
       )}
